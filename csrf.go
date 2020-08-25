@@ -13,7 +13,7 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
-// Package csrf is a middleware that generates and validates CSRF tokens for Macaron.
+// Package csrf is a middleware that generates and validates CSRF tokens for Emmanuel.
 package csrf
 
 import (
@@ -23,8 +23,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/go-macaron/session"
-	"gopkg.in/macaron.v1"
+	"github.com/go-emmanuel/emmanuel"
+	"github.com/go-emmanuel/session"
 )
 
 // CSRF represents a CSRF service and is used to get the current token and validate a suspect token.
@@ -199,9 +199,9 @@ func prepareOptions(options []Options) Options {
 
 // Generate maps CSRF to each request. If this request is a Get request, it will generate a new token.
 // Additionally, depending on options set, generated tokens will be sent via Header and/or Cookie.
-func Generate(options ...Options) macaron.Handler {
+func Generate(options ...Options) emmanuel.Handler {
 	opt := prepareOptions(options)
-	return func(ctx *macaron.Context, sess session.Store) {
+	return func(ctx *emmanuel.Context, sess session.Store) {
 		x := &csrf{
 			Secret:         opt.Secret,
 			Header:         opt.Header,
@@ -255,7 +255,7 @@ func Generate(options ...Options) macaron.Handler {
 
 // Csrfer maps CSRF to each request. If this request is a Get request, it will generate a new token.
 // Additionally, depending on options set, generated tokens will be sent via Header and/or Cookie.
-func Csrfer(options ...Options) macaron.Handler {
+func Csrfer(options ...Options) emmanuel.Handler {
 	return Generate(options...)
 }
 
@@ -263,7 +263,7 @@ func Csrfer(options ...Options) macaron.Handler {
 // HTTP header and then a "_csrf" form value. If one of these is found, the token will be validated
 // using ValidToken. If this validation fails, custom Error is sent in the reply.
 // If neither a header or form value is found, http.StatusBadRequest is sent.
-func Validate(ctx *macaron.Context, x CSRF) {
+func Validate(ctx *emmanuel.Context, x CSRF) {
 	if token := ctx.Req.Header.Get(x.GetHeaderName()); len(token) > 0 {
 		if !x.ValidToken(token) {
 			ctx.SetCookie(x.GetCookieName(), "", -1, x.GetCookiePath())

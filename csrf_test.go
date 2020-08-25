@@ -23,14 +23,14 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/go-macaron/session"
+	"github.com/go-emmanuel/emmanuel"
+	"github.com/go-emmanuel/session"
 	. "github.com/smartystreets/goconvey/convey"
-	"gopkg.in/macaron.v1"
 )
 
 func Test_GenerateToken(t *testing.T) {
 	Convey("Generate token", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer())
 
@@ -60,7 +60,7 @@ func Test_GenerateToken(t *testing.T) {
 
 func Test_GenerateCookie(t *testing.T) {
 	Convey("Generate token to Cookie", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			SetCookie: true,
@@ -92,7 +92,7 @@ func Test_GenerateCookie(t *testing.T) {
 	})
 
 	Convey("Generate token to custom Cookie", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			Cookie:    "custom",
@@ -127,7 +127,7 @@ func Test_GenerateCookie(t *testing.T) {
 
 func Test_GenerateHeader(t *testing.T) {
 	Convey("Generate token to header", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			SetHeader: true,
@@ -159,7 +159,7 @@ func Test_GenerateHeader(t *testing.T) {
 	})
 
 	Convey("Generate token to header with origin", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			SetHeader: true,
@@ -193,7 +193,7 @@ func Test_GenerateHeader(t *testing.T) {
 	})
 
 	Convey("Generate token to custom header", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			Header:    "X-Custom",
@@ -228,7 +228,7 @@ func Test_GenerateHeader(t *testing.T) {
 
 func Test_Validate(t *testing.T) {
 	Convey("Validate token", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer())
 
@@ -290,7 +290,7 @@ func Test_Validate(t *testing.T) {
 	})
 
 	Convey("Validate custom token", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			Header: "X-Custom",
@@ -355,7 +355,7 @@ func Test_Validate(t *testing.T) {
 	})
 
 	Convey("Validate token with custom error func", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer(Options{
 			ErrorFunc: func(w http.ResponseWriter) {
@@ -423,7 +423,7 @@ func Test_Validate(t *testing.T) {
 
 func Test_Invalid(t *testing.T) {
 	Convey("Invalid session data type", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer())
 
@@ -451,7 +451,7 @@ func Test_Invalid(t *testing.T) {
 	})
 
 	Convey("Invalid request", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer())
 
@@ -467,7 +467,7 @@ func Test_Invalid(t *testing.T) {
 	})
 
 	Convey("Invalid token", t, func() {
-		m := macaron.New()
+		m := emmanuel.New()
 		m.Use(session.Sessioner())
 		m.Use(Csrfer())
 
